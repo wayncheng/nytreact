@@ -5,28 +5,16 @@ import Saved from "./pages/Saved";
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-// const navObject = {
-// 	Search: Search,
-// 	Saved: Saved,
-// }
-
 class Main extends Component {
   state = {
     currentPage: "Search"
   };
 
-  // handlePageChange = page => {
-  //   this.setState({ currentPage: page });
-	// };
-	
-	// renderPage = page => navObject[page]();
-
   render() {
     return (
-      <div className="container">
+      // <div id="all" className="root">
 				  <Router>
-						<div>
-							{/* <Nav currentPage={this.state.currentPage} handlePageChange={this.handlePageChange} /> */}
+						<div id="all">
 							<Nav />
 							<Route exact path="/" component={Home} />
 							<Route exact path="/search" component={Search} />
@@ -34,9 +22,8 @@ class Main extends Component {
 						</div>
 					</Router>
 				
-				{/* {this.renderPage(this.state.currentPage)} */}
 				
-      </div>
+      // </div>
     );
   }
 }

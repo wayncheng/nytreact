@@ -100,40 +100,44 @@ class Search extends Component {
 	render() {
 		return (
 			<main>
-				<h1>Search</h1>
-				<form className="form box">
-					<input
-						className="input"
-						value={this.state.topic}
-						name="topic"
-						onChange={this.handleInputChange}
-						type="text"
-						placeholder="e.g. bananas"
-					/>
-					<input
-						className="input"
-						value={this.state.startYear}
-						name="startYear"
-						onChange={this.handleInputChange}
-						type="text"
-						placeholder="e.g. 2001"
-					/>
-					<input
-						className="input"
-						value={this.state.endYear}
-						name="endYear"
-						onChange={this.handleInputChange}
-						type="text"
-						placeholder="e.g. 2018"
-					/>
-					<button 
-						className="button is-primary" 
-						id="submit"
-						onClick={this.handleFormSubmit}
-					>
-						Search
-					</button>
-				</form>
+				<header className="section">
+					<div id="search-container" className="section-content box">
+						<h2>Search</h2>
+						<form className="form">
+							<input
+								className="input"
+								value={this.state.topic}
+								name="topic"
+								onChange={this.handleInputChange}
+								type="text"
+								placeholder="e.g. bananas"
+							/>
+							<input
+								className="input"
+								value={this.state.startYear}
+								name="startYear"
+								onChange={this.handleInputChange}
+								type="text"
+								placeholder="e.g. 2001"
+							/>
+							<input
+								className="input"
+								value={this.state.endYear}
+								name="endYear"
+								onChange={this.handleInputChange}
+								type="text"
+								placeholder="e.g. 2018"
+							/>
+							<button 
+								className="button is-primary" 
+								id="submit"
+								onClick={this.handleFormSubmit}
+							>
+								Search
+							</button>
+						</form>
+					</div>
+				</header>
 				{/* <Results docs={result_docs}/> */}
 				<article className="results-container">
 					{this.state.docs.map((doc,index) => {

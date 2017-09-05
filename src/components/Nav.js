@@ -2,7 +2,7 @@ import React from "react";
 
 const Nav = props => (
 	<nav className="navbar">
-		<div className="navbar-menu">
+		<div className="navbar-menu is-active">
 			<ul className="navbar-start">
 				<li>
 					<a
