@@ -23,7 +23,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
 				  <Router>
 						<div>
 							{/* <Nav currentPage={this.state.currentPage} handlePageChange={this.handlePageChange} /> */}
