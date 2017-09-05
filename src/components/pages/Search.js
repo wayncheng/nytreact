@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios';
 // import Results from '../Results';
-// const axios = require('axios');
 let result_docs = [];
 class Search extends Component {
 	state = {
@@ -30,6 +29,7 @@ class Search extends Component {
 		console.log('startYear',startYear);
 		console.log('endYear',endYear);
 
+		// Basic form validation
 		if (!topic) 
 			alert('Enter a topic.')
 		else if ((typeof parseInt(startYear,10) !== 'number') ) 
@@ -110,7 +110,7 @@ class Search extends Component {
 								name="topic"
 								onChange={this.handleInputChange}
 								type="text"
-								placeholder="e.g. bananas"
+								placeholder="bananas"
 							/>
 							<input
 								className="input"
@@ -118,7 +118,7 @@ class Search extends Component {
 								name="startYear"
 								onChange={this.handleInputChange}
 								type="text"
-								placeholder="e.g. 2001"
+								placeholder="2001"
 							/>
 							<input
 								className="input"
@@ -126,7 +126,7 @@ class Search extends Component {
 								name="endYear"
 								onChange={this.handleInputChange}
 								type="text"
-								placeholder="e.g. 2018"
+								placeholder="2018"
 							/>
 							<button 
 								className="button is-primary" 
