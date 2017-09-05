@@ -1,12 +1,12 @@
 import React from "react";
 
 const Nav = props => (
-	<nav class="navbar">
-		<div class="navbar-menu">
-			<ul class="navbar-start">
+	<nav className="navbar">
+		<div className="navbar-menu">
+			<ul className="navbar-start">
 				<li>
 					<a
-						class="navbar-item"
+						className="navbar-item"
 						href="/"
 						onClick={() => props.handlePageChange("Home")}
 					>
@@ -15,7 +15,7 @@ const Nav = props => (
 				</li>
 				<li>
 					<a
-						class="navbar-item"
+						className="navbar-item"
 						href="/search"
 						onClick={() => props.handlePageChange("Search")}
 					>
@@ -24,7 +24,7 @@ const Nav = props => (
 				</li>
 				<li>
 					<a
-						class="navbar-item"
+						className="navbar-item"
 						href="/saved"
 						onClick={() => props.handlePageChange("Saved")}
 					>

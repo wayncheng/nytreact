@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+const axios = require('axios');
 class Search extends Component {
 	state = {
 		topic: "",
@@ -20,44 +20,46 @@ class Search extends Component {
 		// Preventing the default behavior of the form submit (which is to refresh the page)
 		event.preventDefault();
 		let { topic, startYear, endYear } = this.state;
-
+		console.log('topic',topic);
+		console.log('startYear',startYear);
+		console.log('endYear',endYear);
 		if (!topic) {
 			alert('Enter a topic.')
 		}
-		else if (parseInt(startYear).isNaN()) {
+		else if ((typeof parseInt(startYear,10) !== 'number') ) {
 			alert('invalid start year')
 		}
-		else if (parseInt(endYear).isNaN()) {
+		else if ((typeof parseInt(endYear,10) !== 'number')) {
 			alert('invalid end year')
 		}
 		else {
 			console.log(`Searching for ${topic} from ${startYear} to ${endYear}...`);
 				
-		// let baseURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-		let queryURL = baseURL + '?' + $.param({
-			'api-key': "d689a3ae4786408c97d5be109fa52bea",
-			'q': topic,
-		  'begin_date': startYear,
-		  'end_date': endYear
-		});
-		console.log('queryURL',queryURL);
+			let baseURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+			// let queryURL = baseURL + '?' + $.param({
+			// 	'api-key': "d689a3ae4786408c97d5be109fa52bea",
+			// 	'q': topic,
+			//   'begin_date': startYear,
+			//   'end_date': endYear
+			// });
+			// console.log('queryURL',queryURL);
 
-		$.ajax({
-		  url: queryURL,
-		  method: 'GET',
-		}).done(function(result) {
-			console.log(result);
-		  var docs = result.response.docs;
-		  $('#results').empty();
-		  
-		  // for (var i=0; i<docs.length; i++) {
-		  // 	var r = docs[i];
-		  // };
-
-
-		});
-
-
+			axios.get(baseURL, {
+				params: {
+					'api-key': "d689a3ae4786408c97d5be109fa52bea",
+					'q': topic,
+					'begin_date': startYear,
+					'end_date': endYear
+				}
+			})
+			.then(function(result){
+				console.log('result',result);
+				var docs = result.response.docs;
+				console.log('docs',docs);
+			})
+			.catch(function(error){
+				console.log('error',error);
+			})
 
 			// clear `this.state.firstName` and `this.state.lastName`, clearing the inputs
 			this.setState({
@@ -75,7 +77,7 @@ class Search extends Component {
 				<form className="form">
 					<input
 						className="input"
-						value={this.state.firstName}
+						value={this.state.topic}
 						name="topic"
 						onChange={this.handleInputChange}
 						type="text"
@@ -83,7 +85,7 @@ class Search extends Component {
 					/>
 					<input
 						className="input"
-						value={this.state.firstName}
+						value={this.state.startYear}
 						name="startYear"
 						onChange={this.handleInputChange}
 						type="text"
@@ -91,13 +93,17 @@ class Search extends Component {
 					/>
 					<input
 						className="input"
-						value={this.state.firstName}
+						value={this.state.endYear}
 						name="endYear"
 						onChange={this.handleInputChange}
 						type="text"
 						placeholder="e.g. 2018"
 					/>
-					<button className="button" id="submit">
+					<button 
+						className="button" 
+						id="submit"
+						onClick={this.handleFormSubmit}
+					>
 						Search
 					</button>
 				</form>
