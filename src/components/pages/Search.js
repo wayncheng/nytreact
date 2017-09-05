@@ -32,6 +32,32 @@ class Search extends Component {
 		}
 		else {
 			console.log(`Searching for ${topic} from ${startYear} to ${endYear}...`);
+				
+		// let baseURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+		let queryURL = baseURL + '?' + $.param({
+			'api-key': "d689a3ae4786408c97d5be109fa52bea",
+			'q': topic,
+		  'begin_date': startYear,
+		  'end_date': endYear
+		});
+		console.log('queryURL',queryURL);
+
+		$.ajax({
+		  url: queryURL,
+		  method: 'GET',
+		}).done(function(result) {
+			console.log(result);
+		  var docs = result.response.docs;
+		  $('#results').empty();
+		  
+		  // for (var i=0; i<docs.length; i++) {
+		  // 	var r = docs[i];
+		  // };
+
+
+		});
+
+
 
 			// clear `this.state.firstName` and `this.state.lastName`, clearing the inputs
 			this.setState({
@@ -71,7 +97,9 @@ class Search extends Component {
 						type="text"
 						placeholder="e.g. 2018"
 					/>
-
+					<button className="button" id="submit">
+						Search
+					</button>
 				</form>
 			</main>
 		);

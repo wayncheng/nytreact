@@ -7,6 +7,15 @@ const Nav = props => (
 				<li>
 					<a
 						class="navbar-item"
+						href="/"
+						onClick={() => props.handlePageChange("Home")}
+					>
+						Home
+					</a>
+				</li>
+				<li>
+					<a
+						class="navbar-item"
 						href="/search"
 						onClick={() => props.handlePageChange("Search")}
 					>
