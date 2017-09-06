@@ -65,10 +65,11 @@ main {
 	width: 100%;
 }
 header {
-	background-color: #08AEEA;
-	background-image: linear-gradient(0deg, #08AEEA 0%, #2AF598 100%);
-	background-color: #0093E9;
-	background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);	
+	/* background-color: #08AEEA; */
+	/* background-image: linear-gradient(0deg, #08AEEA 0%, #2AF598 100%); */
+	/* background-color: #0093E9; */
+	/* background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);	 */
+	background-color: #9b59b6;
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -80,11 +81,20 @@ header {
 #search-container {
 	max-width: 400px;
 	background-color: #fff;
-	padding: 3rem 3rem;
+	padding: 2rem 3rem;
 }
 form input {
 	margin: 10px 0;
 }
 form #submit {
 	width: 100%;
+}
+
+article {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+article .box {
+	max-width: 500px;
 }

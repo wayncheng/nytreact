@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios';
+import API from '../../utils/API';
 // import Results from '../Results';
 let result_docs = [];
 class Search extends Component {
@@ -86,15 +87,32 @@ class Search extends Component {
 		}
 	};
 
-	handleSaveClick = (id) => {
-		// var data_id = $(this).attr('data-id');
+	handleSaveClick = (title,url,date) => {
+		// var data_id = $(this).attr('data-key');
 		// console.log('data_id',data_id);
 
-		console.log('id',id);
+		// console.log('id',id);
+		// var children = document.getElementById(id).childNodes;
+		// var h4 = document.querySelector(`#${id} > h4.title`);
+		// console.log('h4',h4);
+		// console.log('title',title);
+		// console.log('url',url);
+		// console.log('date',date);
+		let postData = {
+			title: title,
+			url: url,
+			date: date,
+		}
+		console.log('postData',postData);
+		
+		API.postSaved(postData)
+		.then(res => console.log('res',res))
+		.catch(err => console.log('err',err))
 
-		this.setState({
-			saveID: id
-		})
+		// this.setState({
+		// 	saveID: id
+		// })
+
 	}
 
 	render() {
@@ -142,7 +160,7 @@ class Search extends Component {
 				<article className="results-container">
 					{this.state.docs.map((doc,index) => {
 						return (
-							<div className="box" key={index}>
+							<div id={index} className="box feed-item" key={index}>
 								<a className="url" href={doc.url}>
 									<h4 className="title">{doc.title}</h4>
 								</a>
@@ -150,14 +168,15 @@ class Search extends Component {
 								<a 
 									className="save-btn button" 
 									href="#!"
-									data-id={index}
-									onClick={() => this.handleSaveClick(index)}
+									data-key={index}
+									onClick={() => this.handleSaveClick(doc.title,doc.url,doc.date)}
 									>
 									<i className="fa fa-heart"></i>
 									</a>
 							</div>
 						)
 					})}
+					
 				</article>
 			</main>
 		);

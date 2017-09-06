@@ -17,12 +17,13 @@
 
 	app.disable("x-powered-by");
 
+// 	app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+// });
 	// Set Static Directory
 	// app.use(express.static(path.join(__dirname, "public")));
-
-	// Set Handlebars
-	// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-	// app.set("view engine", "handlebars");
 
 	// Use morgan with app
 	app.use(logger("dev"));
@@ -35,13 +36,19 @@
 
 	// logs each url that is requested, then passes it on.
 	app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
 		console.log("url : " + req.url);
 		next();
 	});
 	//=================================================
-	mongoose.connect(process.env.MONGODB_URI);
+	if (process.env.NODE_ENV === 'production') {
+		mongoose.connect(process.env.MONGODB_URI);
+	}
+	else {
+		mongoose.connect("mongodb://localhost/nytreact");
+	}
 	// mongoose.connect('mongodb://localhost:27017');
-	mongoose.connect("mongodb://localhost/nytreact");
 	var db = mongoose.connection;
 
 	db.on("error", function(err) {
@@ -56,14 +63,12 @@
 
 	//=================================================
 	//   var entry = new Article({
-	// 	  title: 'Pizza is delicious.',
-	// 	  link: 'https://che.ng',
-	// 	  author: 'Batman Batman',
-	// 	  author_profile: 'https://instagram.com/wayncheng',
-	// 	  date: 'Aug 24'
+	// 	  title: 'Two three four five',
+	// 	  url: 'https://che.ng',
+	// 	  date: '2014-12-31T13:11:37Z'
 	//   });
 
-	//   // Now, save that entry to the db
+	// // Now, save that entry to the db
 	//   entry.save(function(err, doc) {
 	// 	if (err) { console.log(err); }
 	// 	else {
@@ -71,33 +76,48 @@
 	// 	}
 	//   });
 
-	//==================================================
-	let newArticleCount = 0;
-
 	
 	// GET SAVED ==================================================
 	app.get("/api/saved", function(req, res) {
-		Article.find({ saved: true }, function(err, docs) {
+		console.log('GET /api/saved');
+		Article.find(function(err, docs) {
 			if (err) console.log(err);
 			else {
 				////////////////////////////////////////////////////
 				// Render document /////////////////////////////////
 				////////////////////////////////////////////////////
+				console.log('server.js docs',docs);
+				res.json(docs)
 			}
 		});
 	});
 
 	// POST SAVED ==================================================
 	app.post("/api/saved", function(req, res) {
+		console.log('POST /api/saved');
 		if (err) throw err;
 		else {
-			////////////////////////////////////////////////////
-			// Render document /////////////////////////////////
+			// Post to MongoDB /////////////////////////////////
+			console.log('req.body',req.body);
+			// var entry = new Article({
+			// 	title: 'Two three four five',
+			// 	url: 'https://che.ng',
+			// 	date: '2014-12-31T13:11:37Z'
+			// });
+
+			// // Now, save that entry to the db
+			// entry.save(function(err, doc) {
+			// 	if (err) throw err;
+			// 	else {
+			// 		console.log(doc);
+			// 	}
+			// });
 			////////////////////////////////////////////////////
 		}
 	});
 	// POST SAVED ==================================================
 	app.delete("/api/saved", function(req, res) {
+		console.log('DELETE /api/saved');
 		if (err) throw err;
 		else {
 			////////////////////////////////////////////////////
