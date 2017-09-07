@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
+let result_docs = [];
 
 class Saved extends Component {
 	state = {
@@ -11,25 +12,53 @@ class Saved extends Component {
 		API.getSaved()
 			.then(result => {
 				let docs = result.data;
-				// result_docs = docs;
+				result_docs = docs;
+				// Add saved state to each doc
+				result_docs.map(doc => doc.saved = true)
 
 				this.setState({
-					docs: docs
+					docs: result_docs
 				});
 				console.log("this.state.docs", this.state.docs);
 			})
 			.catch(error => console.log("error", error));
 	};
 
-	handleSaveClick = (id) => {
+	handleSaveClick = (id,saved,index,title,url,date) => {
 		console.log('id',id);
-
-		API.deleteSaved(id)
-		.then(res => {
-			console.log('res',res);
-		})
-		.catch(err => console.log('err',err))
-
+		if (saved) {
+			API.deleteSaved(id,null)
+			.then(res => {
+				console.log('res',res);
+				result_docs[index].saved = false;
+				console.log('result_docs[index]',result_docs[index]);
+				this.setState({
+					docs: result_docs
+				})
+			})
+			.catch(err => console.log('err',err))
+		}
+		else {
+			
+						let postData = {
+							title: title,
+							url: url,
+							date: date,
+						}
+						console.log('postData',postData);
+						
+						API.postSaved(postData)
+						.then(res => {
+							// console.log('res',res)
+							console.log('res.data',res.data);
+							result_docs[index].saved = true;
+							console.log('result_docs[index]',result_docs[index]);
+							this.setState({
+								docs: result_docs
+							})
+						})
+						.catch(err => console.log('err',err))
+					}
 	}
 
 	render() {
@@ -49,16 +78,15 @@ class Saved extends Component {
 								>
 									<span className="subrow subrow-1">
 										<a className="url" href={doc.url}>
-											<h4 className="title">
-												{doc.title}
-											</h4>
+											<h4 className="title"> {doc.title} </h4>
 										</a>
 										<a
-											className="save-btn saved"
+											className="save-btn"
 											href="#!"
 											data-key={index}
+											data-saved={doc.saved}
 											onClick={() =>
-												this.handleSaveClick( doc._id )}
+												this.handleSaveClick( doc._id,doc.saved,index,doc.title,doc.url,doc.date )}
 										>
 											<i className="fa fa-heart" />
 										</a>

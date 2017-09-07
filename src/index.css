@@ -133,6 +133,6 @@ article .box {
 	color: rgba(0,0,0,0.24);
 	font-size: 20px;
 }
-.saved i {
+.save-btn[data-saved="true"], .save-btn[data-saved="true"] i {
 	color: #e74c3c;
 }
