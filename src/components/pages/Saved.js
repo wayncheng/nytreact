@@ -21,7 +21,7 @@ class Saved extends Component {
 			.catch(error => console.log("error", error));
 	};
 
-	// handleSaveClick = (title,url,date) => {
+	handleSaveClick = (title,url,date) => {
 	// 	let postData = {
 	// 		title: title,
 	// 		url: url,
@@ -38,7 +38,7 @@ class Saved extends Component {
 	// 	// this.setState({
 	// 	// 	saveID: id
 	// 	// })
-	// }
+	}
 
 	render() {
 		return (
@@ -62,15 +62,11 @@ class Saved extends Component {
 											</h4>
 										</a>
 										<a
-											className="save-btn"
+											className="save-btn saved"
 											href="#!"
 											data-key={index}
 											onClick={() =>
-												this.handleSaveClick(
-													doc.title,
-													doc.url,
-													doc.date
-												)}
+												this.handleSaveClick( doc._id )}
 										>
 											<i className="fa fa-heart" />
 										</a>
