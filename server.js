@@ -25,8 +25,10 @@
 	// Set Static Directory
 	// app.use(express.static(path.join(__dirname, "public")));
 
-	// Use morgan with app
-	app.use(logger("dev"));
+	app.set('view engine', 'jsx');
+	app.engine('jsx', require('express-react-views').createEngine());
+
+	app.use(logger("dev")); // Use morgan with app
 
 	// Set Body Parser
 	app.use(bodyParser.json());
@@ -94,36 +96,41 @@
 
 	// POST SAVED ==================================================
 	app.post("/api/saved", function(req, res) {
-		console.log('POST /api/saved');
-		if (err) throw err;
-		else {
-			// Post to MongoDB /////////////////////////////////
-			console.log('req.body',req.body);
-			// var entry = new Article({
-			// 	title: 'Two three four five',
-			// 	url: 'https://che.ng',
-			// 	date: '2014-12-31T13:11:37Z'
-			// });
+		console.log('--> POST /api/saved');
+		// console.log('req.body',req.body);
 
-			// // Now, save that entry to the db
-			// entry.save(function(err, doc) {
-			// 	if (err) throw err;
-			// 	else {
-			// 		console.log(doc);
-			// 	}
-			// });
+		// Fix the weird data format of req.body
+		var reqFixed = JSON.parse(Object.keys(req.body)[0]);
+		let {title, url, date} = reqFixed;
+		console.log('title',title);
+		console.log('url',url);
+		console.log('date',date);		
+
+			// Post to MongoDB /////////////////////////////////
+			let entry = new Article({
+				title: title,
+				url: url,
+				date: date
+			});
+
+			entry.save(function(err, doc) {
+				if (err) {
+					console.log('err',err);
+					res.send('There was an error saving this article')
+				}
+				else {
+					console.log(doc);
+					res.send('Saved to DB!')
+				}
+			});
 			////////////////////////////////////////////////////
-		}
+		// }
 	});
-	// POST SAVED ==================================================
+	// DELETE SAVED ==================================================
 	app.delete("/api/saved", function(req, res) {
 		console.log('DELETE /api/saved');
-		if (err) throw err;
-		else {
-			////////////////////////////////////////////////////
 			// Render document /////////////////////////////////
 			////////////////////////////////////////////////////
-		}
 	});
 
 	// GENERAL GETS ==================================================
@@ -141,15 +148,14 @@
 
 	// ERRORS =========================================
 	app.use(function(req, res) {
-		res.type("text/html");
 		res.status(404);
-		res.render("404");
+		res.send("404");
 	});
 
 	app.use(function(err, req, res, next) {
 		console.error(err.stack);
 		res.status(500);
-		res.render("500");
+		res.send("500");
 	});
 
 	// START SERVER ===================================

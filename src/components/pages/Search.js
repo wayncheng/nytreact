@@ -88,25 +88,18 @@ class Search extends Component {
 	};
 
 	handleSaveClick = (title,url,date) => {
-		// var data_id = $(this).attr('data-key');
-		// console.log('data_id',data_id);
-
-		// console.log('id',id);
-		// var children = document.getElementById(id).childNodes;
-		// var h4 = document.querySelector(`#${id} > h4.title`);
-		// console.log('h4',h4);
-		// console.log('title',title);
-		// console.log('url',url);
-		// console.log('date',date);
 		let postData = {
 			title: title,
 			url: url,
 			date: date,
 		}
 		console.log('postData',postData);
-		
+
 		API.postSaved(postData)
-		.then(res => console.log('res',res))
+		.then(res => {
+			// console.log('res',res)
+			console.log('res.data',res.data);
+		})
 		.catch(err => console.log('err',err))
 
 		// this.setState({
