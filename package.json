@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
+  "author": "wayne cheng",
+  "engines": {
+    "node": "6.11.1"
+  },
   "dependencies": {
     "body-parser": "^1.17.2",
     "dotenv": "^4.0.0",
