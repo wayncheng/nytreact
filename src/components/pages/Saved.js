@@ -21,23 +21,15 @@ class Saved extends Component {
 			.catch(error => console.log("error", error));
 	};
 
-	handleSaveClick = (title,url,date) => {
-	// 	let postData = {
-	// 		title: title,
-	// 		url: url,
-	// 		date: date,
-	// 	}
-	// 	console.log('postData',postData);
+	handleSaveClick = (id) => {
+		console.log('id',id);
 
-	// 	API.postSaved(postData)
-	// 	.then(res => {
-	// 		console.log('res.data',res.data);
-	// 	})
-	// 	.catch(err => console.log('err',err))
+		API.deleteSaved(id)
+		.then(res => {
+			console.log('res',res);
+		})
+		.catch(err => console.log('err',err))
 
-	// 	// this.setState({
-	// 	// 	saveID: id
-	// 	// })
 	}
 
 	render() {

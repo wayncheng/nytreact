@@ -19,7 +19,18 @@ export default {
 			}
 		})
   },
-  deleteSaved: () => {
-    return axios.get('http://localhost:5000/api/saved');
+  deleteSaved: (id) => {
+		console.log('>>> API delete');
+		return axios({
+			method: 'delete',
+			url: 'http://localhost:5000/api/saved',
+			data: {
+				_id: id
+			},
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			// 	'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+			}
+		})
   },
 };

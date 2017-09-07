@@ -48,7 +48,10 @@ class Search extends Component {
 					'q': topic,
 					'begin_date': startYear+'0101',
 					'end_date': endYear+'0101'
-				}
+				},
+				// headers: {
+				// 	'Content-Type': 'application/x-www-form-urlencoded'
+				// },
 			})
 			.then(function(result){
 				let docs = result.data.response.docs;

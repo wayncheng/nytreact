@@ -39,7 +39,9 @@
 	// logs each url that is requested, then passes it on.
 	app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+
 		console.log("url : " + req.url);
 		next();
 	});
@@ -78,7 +80,9 @@
 	// 	}
 	//   });
 
-	
+	// Fix req.body Objecy issue ==================================
+	const fixReqBody = reqBody => JSON.parse(Object.keys(reqBody)[0]);
+
 	// GET SAVED ==================================================
 	app.get("/api/saved", function(req, res) {
 		console.log('GET /api/saved');
@@ -100,7 +104,8 @@
 		// console.log('req.body',req.body);
 
 		// Fix the weird data format of req.body
-		var reqFixed = JSON.parse(Object.keys(req.body)[0]);
+		// var reqFixed = JSON.parse(Object.keys(req.body)[0]);
+		let reqFixed = fixReqBody(req.body);
 		let {title, url, date} = reqFixed;
 		console.log('title',title);
 		console.log('url',url);
@@ -128,9 +133,17 @@
 	});
 	// DELETE SAVED ==================================================
 	app.delete("/api/saved", function(req, res) {
-		console.log('DELETE /api/saved');
-			// Render document /////////////////////////////////
-			////////////////////////////////////////////////////
+		console.log('>>> DELETE /api/saved');
+		let reqFixed = fixReqBody(req.body);
+
+		// Delete document /////////////////////////////////
+		Article.remove({_id: reqFixed._id}, err => {
+			if (err) return handleError(err);
+			else {
+				res.send('article removed.')
+			}
+		})
+		////////////////////////////////////////////////////
 	});
 
 	// GENERAL GETS ==================================================
@@ -147,16 +160,16 @@
 	});
 
 	// ERRORS =========================================
-	app.use(function(req, res) {
-		res.status(404);
-		res.send("404");
-	});
+	// app.use(function(req, res) {
+	// 	res.status(404);
+	// 	res.send("404");
+	// });
 
-	app.use(function(err, req, res, next) {
-		console.error(err.stack);
-		res.status(500);
-		res.send("500");
-	});
+	// app.use(function(err, req, res, next) {
+	// 	console.error(err.stack);
+	// 	res.status(500);
+	// 	res.send("500");
+	// });
 
 	// START SERVER ===================================
 	app.listen(port, function() {
