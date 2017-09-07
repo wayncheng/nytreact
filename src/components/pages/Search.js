@@ -44,7 +44,7 @@ class Search extends Component {
 		// GET request using Axios
 			axios.get(baseURL, {
 				params: {
-					'api-key': "6ef54a119a2f4548a3284da2bc627cb7",
+					'api-key': process.env.NYT_API_KEY,
 					'q': topic,
 					'begin_date': startYear+'0101',
 					'end_date': endYear+'0101'
