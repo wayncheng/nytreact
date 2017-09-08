@@ -1,0 +1,3 @@
+# slugignore
+
+/client/yarn.lock
